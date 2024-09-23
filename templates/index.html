@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        
+        <!-- Форма для поиска города -->
+        <form action="/weather" method="post" class="weather-form">
+            <label for="city">Enter city name:</label>
+            <input type="text" id="city" name="city" placeholder="Enter city name">
+            <button type="submit">Get Weather</button>
+        </form>
+        <br/>
+        <!-- Кнопка для отображения предопределенных городов -->
+
+        <div  class="button-container">
+        <form action="/four-cities-day" method="get">
+            <button type="submit" class="show-cities-button">Show Weather for 4 Cities per Day</button>
+        </form>
+        <form action="/four-cities-week" method="get">
+            <button type="submit" class="show-cities-button">Show Weather for 4 Cities per Week</button>
+        </form>     
+        </div>
+
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/static/service-worker.js')
+            .then(function(registration) {
+              console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+              console.log('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+</body>
+</html>
+

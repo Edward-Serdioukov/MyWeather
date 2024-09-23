@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather in {{ city_weather.city }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+</head>
+<body>
+    <div class="container-one">
+        <h1>Weather in {{ city_weather.city }}</h1>
+        
+        <div class="cards-container">
+            <h2>Today is {{ city_weather.day }}</h2>
+            <div class="weather-card-one">
+                <img src="{{city_weather.icon }}" alt="{{ city_weather.description }}" class="weather-icon">
+                <div class="weather-info">
+                    <div class="weather-detail">
+                        <p><span class="label">Temperature:</span> {{ city_weather.temperature | round(2) }} °C</p>
+                    </div>
+                    <div class="weather-detail">
+                        <p><span class="label">Pressure:</span> {{ city_weather.pressure | round(2) }} mm Hg</p>
+                    </div>
+                    <div class="weather-detail">
+                        <p><span class="label">Humidity:</span> {{ city_weather.humidity }} %</p>
+                    </div>
+                    <div class="weather-detail">
+                        <p><span class="label">Wind Speed:</span> {{ city_weather.wind_speed }} m/s</p>
+                    </div>
+                    <div class="weather-detail">
+                        <p><span class="label">Description:</span> {{ city_weather.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="/" class="back-button">Back</a>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/static/service-worker.js')
+            .then(function(registration) {
+              console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+              console.log('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+</body>
+</html>
+

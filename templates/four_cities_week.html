@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather for 4 Cities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather for 4 Cities</h1>
+        <div class="city-grid">
+            {% for city_weather in cities_weather %}
+            <div class="city-container">
+                <h2>Weather in <br>{{ city_weather.city }}</h2>
+                <div class="cards-container-week">
+                    {% for day in city_weather.forecast %}
+                    <h2>{{ day.day }}</h2>
+                    <div class="weather-card-week">
+
+                        <img src="{{ day.icon }}" alt="{{ day.description }}" class="weather-icon">
+                        <div class="weather-info">
+                            <div class="weather-detail">
+                                <p>{{ day.temperature | round(2) }} °C</p>
+                            </div>
+                         </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="/" class="back-button">Back</a>
+    </div>
+        
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/static/service-worker.js')
+            .then(function(registration) {
+              console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+              console.log('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+</body>
+</html>
