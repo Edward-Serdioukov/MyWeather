@@ -22,11 +22,9 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # https://flet.dev/docs/publish#versioning
   BUILD_NUMBER: 1
   BUILD_VERSION: 1.0.0
   PYTHON_VERSION: 3.12.4
-  FLUTTER_VERSION: 3.24
   
 jobs:
   build:
@@ -46,16 +44,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
   
-    - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-
-    - name: Flet Build Web
+    - name: Build Web
       run: |
-            echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}, USER: ${GITHUB_REPOSITORY%/*}, PROJECT_BASE_URL: ${GITHUB_REPOSITORY#*/}"
-            flutter config --no-analytics
-            flet build web --base-url ${GITHUB_REPOSITORY#*/} --route-url-strategy hash
+        npm install
+        npm run build
 
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
